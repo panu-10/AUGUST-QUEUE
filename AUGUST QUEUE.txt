@@ -1,0 +1,75 @@
+###OPENHEIMER SUBATOMIC CHALLENGE#include <bits/stdc++.h>
+using namespace std;
+int mod=1e9+7;
+long long f(long long ind,long long target,vector<long long>&arr){
+     if(target==0) return 1;
+     if(ind==0){
+         return target==arr[0];
+     }
+     
+     long long notpick=f(ind-1,target,arr)%mod;
+     long long pick=0;
+     if(arr[ind]<=target) pick=f(ind-1,target-arr[ind],arr)%mod;
+     return (pick+notpick)%mod;
+}
+int main() { 
+	int t;
+	cin>>t;
+	while(t--){
+	    long long  n,target;
+	    cin>>n>>target;
+	    vector<long long>arr(n);
+	    for(long long i=0;i<n;i++){
+	        cin>>arr[i];
+	    }
+	    cout<<f(n-1,target,arr)<<endl;
+	}
+	return 0;
+}
+
+###BARBIE FASHION SHOW
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+struct Outfit {
+    int start;
+    int finish;
+};
+
+bool compare(const Outfit &a, const Outfit &b) {
+    return a.finish < b.finish;
+}
+
+int main() {
+    int t;
+    cin >> t;
+    
+    while (t--) {
+        int n;
+        cin >> n;
+        
+        vector<Outfit> outfits(n);
+        
+        for (int i = 0; i < n; i++) {
+            cin >> outfits[i].start >> outfits[i].finish;
+        }
+        
+        sort(outfits.begin(), outfits.end(), compare);
+        
+        int maxNonOverlapping = 1;
+        int lastFinish = outfits[0].finish;
+        
+        for (int i = 1; i < n; i++) {
+            if (outfits[i].start >= lastFinish) {
+                maxNonOverlapping++;
+                lastFinish = outfits[i].finish;
+            }
+        }
+        
+        cout << maxNonOverlapping << endl;
+    }
+    
+    return 0;
+}
